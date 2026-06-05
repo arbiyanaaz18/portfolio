@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arbiya Naaz | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --card: #1a1a26;
+      --accent: #7c6aff;
+      --accent2: #ff6a9b;
+      --accent3: #6affda;
+      --text: #e8e8f0;
+      --muted: #7a7a9a;
+      --border: rgba(124,106,255,0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 999;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent3); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 3rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Mesh gradient background */
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 70% 40%, rgba(124,106,255,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 20% 70%, rgba(255,106,155,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 50% 10%, rgba(106,255,218,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Floating orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.18;
+      animation: float 8s ease-in-out infinite;
+    }
+    .orb-1 { width: 400px; height: 400px; background: var(--accent); top: -100px; right: -50px; animation-delay: 0s; }
+    .orb-2 { width: 300px; height: 300px; background: var(--accent2); bottom: 50px; left: 10%; animation-delay: 3s; }
+    .orb-3 { width: 200px; height: 200px; background: var(--accent3); top: 40%; right: 30%; animation-delay: 5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 900px; }
+
+    .welcome-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(124,106,255,0.1);
+      border: 1px solid rgba(124,106,255,0.3);
+      border-radius: 100px;
+      padding: 0.4rem 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.8rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .welcome-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent3);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.5)} }
+
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+      animation: fadeUp 0.8s ease 0.15s both;
+    }
+    .hero-name .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-title {
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      color: var(--muted);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+    .hero-title span { color: var(--accent3); font-weight: 500; }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.8s ease 0.45s both;
+    }
+
+    .hero-btns {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.8s ease 0.6s both;
+    }
+
+    .btn {
+      padding: 0.75rem 1.8rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      letter-spacing: 0.03em;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #9b6aff);
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 24px rgba(124,106,255,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,106,255,0.5); }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* ── COURSE STRIP ── */
+    .course-strip {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 3rem;
+      display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;
+    }
+    .strip-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+    }
+    .strip-courses { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .strip-course {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+    .strip-code {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent3);
+      background: rgba(106,255,218,0.07);
+      border: 1px solid rgba(106,255,218,0.2);
+      border-radius: 4px;
+      padding: 0.1rem 0.5rem;
+    }
+
+    /* ── SECTION LAYOUT ── */
+    section { padding: 6rem 3rem; }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    /* ── WHAT YOU'LL FIND ── */
+    .find-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .find-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.8rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .find-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--card-accent, linear-gradient(90deg, var(--accent), var(--accent2)));
+    }
+    .find-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(124,106,255,0.4);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+    .find-card-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .find-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .find-card-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── COURSES SECTION ── */
+    .courses-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    .course-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .course-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .course-card .glow {
+      position: absolute;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.12;
+      top: -50px; right: -50px;
+    }
+    .course-badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 6px;
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+    .badge-web { background: rgba(106,255,218,0.1); color: var(--accent3); border: 1px solid rgba(106,255,218,0.25); }
+    .badge-se  { background: rgba(255,106,155,0.1); color: var(--accent2); border: 1px solid rgba(255,106,155,0.25); }
+
+    .course-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .course-subtitle {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .course-meta {
+      display: flex; flex-direction: column; gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+    .meta-row {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.83rem;
+    }
+    .meta-icon { font-size: 0.9rem; }
+    .meta-label { color: var(--muted); }
+    .meta-val { color: var(--text); font-weight: 500; }
+
+    .course-topics {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .topic-chip {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.65rem;
+      border-radius: 100px;
+      background: rgba(124,106,255,0.08);
+      border: 1px solid rgba(124,106,255,0.2);
+      color: var(--muted);
+    }
+
+    /* ── ACADEMIC JOURNEY ── */
+    .timeline {
+      position: relative;
+      max-width: 700px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 18px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+    }
+    .tl-item {
+      display: flex; gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+    .tl-dot {
+      flex-shrink: 0;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 2px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      z-index: 1;
+      box-shadow: 0 0 16px rgba(124,106,255,0.3);
+    }
+    .tl-body {
+      padding-top: 0.4rem;
+    }
+    .tl-year {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.25rem;
+    }
+    .tl-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .tl-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── SKILLS BAR ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+    .skill-item { }
+    .skill-header {
+      display: flex; justify-content: space-between;
+      font-size: 0.83rem;
+      margin-bottom: 0.5rem;
+    }
+    .skill-name { font-weight: 500; }
+    .skill-pct { color: var(--accent3); font-family: 'DM Mono', monospace; font-size: 0.78rem; }
+    .skill-bar {
+      height: 4px;
+      background: var(--surface);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform-origin: left;
+      animation: growBar 1.2s ease forwards;
+      transform: scaleX(0);
+    }
+    @keyframes growBar { to { transform: scaleX(1); } }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+    .footer-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .footer-uni {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .course-strip { padding: 1rem 1.5rem; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+      .footer-uni { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">arbiya.dev</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#journey">Journey</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="about">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="hero-content">
+      <div class="welcome-tag">✦ Welcome to my Portfolio</div>
+      <h1 class="hero-name">Hello, I'm<br><span class="highlight">Arbiya Naaz</span></h1>
+      <p class="hero-title">Computer Science Engineering Student &nbsp;·&nbsp; <span>KLE Technological University</span></p>
+      <p class="hero-desc">
+        Passionate about building meaningful things with code. Exploring the intersection of
+        <strong style="color:var(--accent3)">Web Technologies</strong> and <strong style="color:var(--accent2)">Software Engineering</strong> — one project at a time.
+      </p>
+      <div class="hero-btns">
+        <a href="#courses" class="btn btn-primary">Explore My Work</a>
+        <a href="#journey" class="btn btn-outline">Academic Journey</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSE STRIP -->
+  <div class="course-strip">
+    <span class="strip-label">Current Courses</span>
+    <div class="strip-courses">
+      <div class="strip-course">
+        <span class="strip-code">25ECSP207</span>
+        <span>Web Technologies &nbsp;·&nbsp; Prof. Shweta Patil</span>
+      </div>
+      <div class="strip-course">
+        <span class="strip-code">25ECSC213</span>
+        <span>Software Engineering &nbsp;·&nbsp; Prof. Padmashree Desai</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT YOU'LL FIND -->
+  <section id="projects">
+    <div class="section-tag">✦ Portfolio Contents</div>
+    <h2 class="section-title">What You'll Find Here</h2>
+    <p class="section-sub">A curated collection of everything I've learned, built, and explored during my academic journey at KLE Tech.</p>
+    <div class="find-grid">
+      <div class="find-card reveal" style="--card-accent: linear-gradient(90deg, #7c6aff, #9b6aff)">
+        <div class="find-card-icon">🗂️</div>
+        <div class="find-card-title">Course Projects</div>
+        <div class="find-card-desc">Hands-on projects built as part of Web Tech and Software Engineering coursework — from responsive websites to full SDLC implementations.</div>
+      </div>
+      <div class="find-card reveal" style="--card-accent: linear-gradient(90deg, #ff6a9b, #ff9b6a)">
+        <div class="find-card-icon">📚</div>
+        <div class="find-card-title">What I've Learnt</div>
+        <div class="find-card-desc">Key concepts, tools, and skills — HTML, CSS, JavaScript, React, software design patterns, testing, and project management methodologies.</div>
+      </div>
+      <div class="find-card reveal" style="--card-accent: linear-gradient(90deg, #6affda, #6abfff)">
+        <div class="find-card-icon">🎓</div>
+        <div class="find-card-title">Academic Journey</div>
+        <div class="find-card-desc">My story from first stepping into CSE at KLE Tech — milestones, challenges, and growth moments along the way.</div>
+      </div>
+      <div class="find-card reveal" style="--card-accent: linear-gradient(90deg, #ffda6a, #ff9b6a)">
+        <div class="find-card-icon">📋</div>
+        <div class="find-card-title">Course Overview</div>
+        <div class="find-card-desc">Detailed breakdowns of course syllabi, assignments, topics covered, and instructor information for both Web Tech and SE courses.</div>
+      </div>
+      <div class="find-card reveal" style="--card-accent: linear-gradient(90deg, #7c6aff, #ff6a9b)">
+        <div class="find-card-icon">🛠️</div>
+        <div class="find-card-title">Skills & Tools</div>
+        <div class="find-card-desc">A snapshot of the technologies and frameworks I've picked up, with an honest assessment of my current proficiency levels.</div>
+      </div>
+      <div class="find-card reveal" style="--card-accent: linear-gradient(90deg, #6affda, #7c6aff)">
+        <div class="find-card-icon">✍️</div>
+        <div class="find-card-title">Notes & Insights</div>
+        <div class="find-card-desc">Personal notes, reflections, and summaries from lectures and lab sessions — useful for revision and sharing knowledge.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES -->
+  <section id="courses" style="background: var(--surface)">
+    <div class="section-tag">✦ Academics</div>
+    <h2 class="section-title">My Courses</h2>
+    <p class="section-sub">Two core courses shaping my technical foundation this semester at KLE Technological University.</p>
+    <div class="courses-wrapper">
+
+      <!-- Web Tech -->
+      <div class="course-card reveal">
+        <div class="glow" style="background: var(--accent3)"></div>
+        <div class="course-badge badge-web">25ECSP207</div>
+        <h3 class="course-title">Web Technologies</h3>
+        <p class="course-subtitle">Building the modern web from the ground up</p>
+        <div class="course-meta">
+          <div class="meta-row">
+            <span class="meta-icon">👩‍💻</span>
+            <span class="meta-label">Instructor:</span>
+            <span class="meta-val">Prof. Shweta Patil</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-icon">🏫</span>
+            <span class="meta-label">University:</span>
+            <span class="meta-val">KLE Technological University</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-icon">📌</span>
+            <span class="meta-label">Course Code:</span>
+            <span class="meta-val" style="font-family:'DM Mono',monospace;color:var(--accent3)">25ECSP207</span>
+          </div>
+        </div>
+        <div class="course-topics">
+          <span class="topic-chip">HTML5</span>
+          <span class="topic-chip">CSS3</span>
+          <span class="topic-chip">JavaScript</span>
+          <span class="topic-chip">React</span>
+          <span class="topic-chip">Node.js</span>
+          <span class="topic-chip">REST APIs</span>
+          <span class="topic-chip">Responsive Design</span>
+          <span class="topic-chip">Databases</span>
+        </div>
+      </div>
+
+      <!-- Software Engineering -->
+      <div class="course-card reveal">
+        <div class="glow" style="background: var(--accent2)"></div>
+        <div class="course-badge badge-se">25ECSC213</div>
+        <h3 class="course-title">Software Engineering</h3>
+        <p class="course-subtitle">Principles and practices for building reliable software</p>
+        <div class="course-meta">
+          <div class="meta-row">
+            <span class="meta-icon">👩‍🏫</span>
+            <span class="meta-label">Instructor:</span>
+            <span class="meta-val">Prof. Padmashree Desai</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-icon">🏫</span>
+            <span class="meta-label">University:</span>
+            <span class="meta-val">KLE Technological University</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-icon">📌</span>
+            <span class="meta-label">Course Code:</span>
+            <span class="meta-val" style="font-family:'DM Mono',monospace;color:var(--accent2)">25ECSC213</span>
+          </div>
+        </div>
+        <div class="course-topics">
+          <span class="topic-chip">SDLC</span>
+          <span class="topic-chip">Agile & Scrum</span>
+          <span class="topic-chip">UML Diagrams</span>
+          <span class="topic-chip">Requirement Analysis</span>
+          <span class="topic-chip">System Design</span>
+          <span class="topic-chip">Testing</span>
+          <span class="topic-chip">Project Management</span>
+          <span class="topic-chip">Quality Assurance</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section>
+    <div class="section-tag">✦ Skills</div>
+    <h2 class="section-title">What I Know</h2>
+    <p class="section-sub">Technologies and concepts I've been learning and practising through coursework and personal projects.</p>
+    <div class="skills-grid reveal">
+      <div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">HTML & CSS</span><span class="skill-pct">85%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">JavaScript</span><span class="skill-pct">72%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Software Design (SDLC)</span><span class="skill-pct">78%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">React</span><span class="skill-pct">60%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">UML & System Design</span><span class="skill-pct">70%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Python / C++</span><span class="skill-pct">65%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACADEMIC JOURNEY -->
+  <section id="journey" style="background: var(--surface)">
+    <div class="section-tag">✦ Timeline</div>
+    <h2 class="section-title">Academic Journey</h2>
+    <p class="section-sub">The milestones and moments that have shaped my path in Computer Science Engineering.</p>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-dot">🏫</div>
+        <div class="tl-body">
+          <div class="tl-year">2022 — START</div>
+          <div class="tl-title">Joined KLE Technological University</div>
+          <div class="tl-desc">Began the B.E. Computer Science Engineering program. Discovered my passion for programming and problem-solving in the very first semester.</div>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-dot">💡</div>
+        <div class="tl-body">
+          <div class="tl-year">2023 — YEAR 2</div>
+          <div class="tl-title">Core CS Foundations</div>
+          <div class="tl-desc">Dived deep into Data Structures, Algorithms, OOP concepts, and Database Management. Built my first functional applications.</div>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-dot">🌐</div>
+        <div class="tl-body">
+          <div class="tl-year">2024 — YEAR 3</div>
+          <div class="tl-title">Web Technologies (25ECSP207)</div>
+          <div class="tl-desc">Started learning modern web development under Prof. Shweta Patil. Built projects using HTML, CSS, JavaScript, and explored frontend frameworks.</div>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-dot">⚙️</div>
+        <div class="tl-body">
+          <div class="tl-year">2024 — YEAR 3</div>
+          <div class="tl-title">Software Engineering (25ECSC213)</div>
+          <div class="tl-desc">Studying software development life cycles, Agile methodologies, and system design under Prof. Padmashree Desai. Learning to think beyond code.</div>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-dot">🚀</div>
+        <div class="tl-body">
+          <div class="tl-year">2025 — AHEAD</div>
+          <div class="tl-title">Projects, Internships & Beyond</div>
+          <div class="tl-desc">Working towards applying everything learned in real-world projects and internships. Building this portfolio is one step in that direction!</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Arbiya Naaz</div>
+    <div class="footer-note">Built with HTML · CSS · JavaScript &nbsp;✦&nbsp; 2025</div>
+    <div class="footer-uni">KLE Technological University<br>B.E. Computer Science Engineering</div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
